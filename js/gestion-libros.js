@@ -49,6 +49,52 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        /* Comienzo de validaciones*/
+        if($('#titulo-libro').val() === ""){
+            alert("Favor de introducir el titulo del libro");
+            return;
+        }
+
+        if($('#n-ISBN').val() === ""){
+            alert("Favor de introducir el numero ISBN");
+            return;
+        }
+
+        if($('#editorial-libro').val() === "0"){
+            alert("Favor de seleccionar la Editorial");
+            return;
+        }
+
+        var anoPublicacion = parseInt($('#ano-publicacion').val(), 10);
+        if (isNaN(anoPublicacion) || anoPublicacion < 1500 || anoPublicacion > 3000) {
+            alert("Favor de introducir un año de publicación válido (entre 1500 y 3000).");
+            return;
+        }
+
+        var anoPublicacion = parseInt($('#n-paginas').val(), 7);
+        if (isNaN(anoPublicacion) || anoPublicacion < 1000000 || anoPublicacion > 0) {
+            alert("Favor de introducir un numero de paginas valido.");
+            return;
+        }
+
+        if($('#tipo-pasta').val() === "0"){
+            alert("Favor de seleccionar un tipo de pasta");
+            return;
+        }
+
+        if($('#ubicacion-libro').val() === "0"){
+            alert("Favor de seleccionar una ubicacion");
+            return;
+        }
+
+        if($('#idioma-libro').val() === "0"){
+            alert("Favor de seleccionar un idioma");
+            return;
+        }
+
+
+        /* Fin de validaciones */
+
         if ($("#id-libro").val() === "" ){
             option = "Guardar"
             typemod = 'POST'

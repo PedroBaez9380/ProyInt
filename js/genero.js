@@ -34,6 +34,11 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        if($('#nombre').val() === ""){
+            alert("Favor de introducir nombre del Genero");
+            return;
+        }
+
         if ($("#id-genero").val() === "" ){
             option = "Guardar"
             typemod = 'POST'

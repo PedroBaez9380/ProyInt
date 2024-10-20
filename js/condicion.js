@@ -33,6 +33,11 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        if($('#descripcion').val() === ""){
+            alert("Favor de introducir descripcion de la condicion");
+            return;
+        }
+
         if ($("#id-condicion").val() === "" ){
             option = "Guardar"
             typemod = 'POST'

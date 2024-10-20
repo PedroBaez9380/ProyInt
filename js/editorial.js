@@ -33,6 +33,11 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        if($('#nombre').val() === ""){
+            alert("Favor de introducir nombre de editorial");
+            return;
+        }
+
         if ($("#id-editorial").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
