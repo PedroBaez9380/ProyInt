@@ -34,6 +34,13 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+
+        if ($("#nombre").val().trim() === "") {
+            alert("Por favor complete el campo de nombre del país.");
+            return; // Detiene el proceso si el campo no está completo
+        }
+
+
         if ($("#id-pais").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
