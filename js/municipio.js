@@ -38,6 +38,18 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+
+        if ($("#nombre-municipio").val().trim() === "") {
+            alert("Por favor complete el nombre del municipio.");
+            return; // Detiene el proceso si el campo está vacío
+        }
+    
+        if ($('#estado-de-municipio').val() === "0") {
+            alert("Por favor seleccione un estado.");
+            return; // Detiene el proceso si no se ha seleccionado un estado
+        }
+
+
         if ($("#id-municipio").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
