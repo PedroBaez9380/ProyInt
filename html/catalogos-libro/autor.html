@@ -73,8 +73,10 @@
         <div class="contenedor-campos">
             <div class="fila-campos">
                 <div><h6>ID de autor</h6><textarea data-id="" id="id-autor" rows="1" disabled></textarea></div>
-                <div><h6>Nombre</h6><textarea id="nombre" rows="1" disabled></textarea></div>
-                <div><h6>Apellido</h6><textarea id="apellido" rows="1" disabled></textarea></div>
+                <div><h6>Nombre</h6><textarea id="nombre" maxlenght="30" rows="1" oninput="validarSoloLetras(this, 'error-nombre')" disabled></textarea></div>
+                <div id="error-nombre" style="color: red; display: none;"></div>
+                <div><h6>Apellido</h6><textarea id="apellido" maxlenght="30" rows="1" oninput="validarSoloLetras(this, 'error-apellido')" disabled></textarea></div>
+                <div id="error-apellido" style="color: red; display: none;"></div>
             </div>
             <div class="botones">
                 <div>

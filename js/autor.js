@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    traerAutores()
+    traerAutores();
 
     $('#tabla-cuerpo').on('click', 'tr', function() {
         
@@ -19,29 +19,47 @@ $(document).ready(function() {
     });
 
     $('#boton-nuevo').click(function() {
-        habilitarCampos()
-        limpiarCampos() 
+        habilitarCampos();
+        limpiarCampos();
         $('#boton-guardar').attr('disabled', false);
         $('#boton-nuevo').attr('disabled', true);
         $('#boton-modificacion').attr('disabled', true);
+        
+        // Asigna la validación de solo letras a los campos cuando se habiliten
+        $('#nombre').on('input', function() {
+            validarSoloLetras(this);
+        });
+
+        $('#apellido').on('input', function() {
+            validarSoloLetras(this);
+        });
     });
 
     $('#boton-modificacion').click(function() {
-        habilitarCampos()
+        habilitarCampos();
         $('#boton-guardar').attr('disabled', false);
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', true);
         $('#boton-borrar').attr('disabled', true);
+        
+        // Asigna la validación de solo letras a los campos cuando se habiliten
+        $('#nombre').on('input', function() {
+            validarSoloLetras(this);
+        });
+
+        $('#apellido').on('input', function() {
+            validarSoloLetras(this);
+        });
     });
 
     $('#boton-guardar').click(function() {
         if ($("#id-autor").val() === "" ){
-            option = "Guardar"
-            typemod = 'POST'
+            option = "Guardar";
+            typemod = 'POST';
             ID = null;
         } else {
-            option = "Actualizar"
-            typemod = 'PUT'
+            option = "Actualizar";
+            typemod = 'PUT';
             ID = $("#id-autor").val();
         }
         $.ajax({
@@ -57,12 +75,11 @@ $(document).ready(function() {
             crossDomain: true
         }).done(function (result) {
             console.log(result);
-            limpiarCampos()
-            deshabilitarCampos()
-            traerAutores()
+            limpiarCampos();
+            deshabilitarCampos();
+            traerAutores();
             alert("Guardado exitoso!");
             
-
         }).fail(function (xhr, status, error) {
             alert("Hubo un problema al guardar: " + error + "\nStatus: " + status);
             console.error(xhr);
@@ -109,6 +126,24 @@ $(document).ready(function() {
     });
 });
 
+        // Función para validar solo letras y limitar a 30 caracteres
+        function validarSoloLetras(campo) {
+            var valorCampo = campo.value;
+
+            // Limitar a 30 caracteres
+            if (valorCampo.length > 30) {
+                campo.value = valorCampo.substring(0, 30);
+                alert('El máximo permitido es de 30 caracteres.');
+            }
+
+            // Expresión regular que permite solo letras y espacios
+            if (/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/.test(valorCampo)) {
+                // Reemplaza los caracteres que no sean letras
+                campo.value = valorCampo.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+                alert('Solo se permiten letras. No se permiten números.');
+            }
+        }
+
 function limpiarCampos(){
     $('.fila-campos div textarea').val('');
     $('.fila-campos div select').val('0');
@@ -124,7 +159,6 @@ function habilitarCampos(){
     $('#apellido').attr('disabled', false);
 }
 
-
 function traerAutores() {
     $('#tabla-cuerpo').empty(); 
     $.ajax({
@@ -133,7 +167,7 @@ function traerAutores() {
         dataType: 'json',
         crossDomain: true
     }).done(function (result) {
-        console.log(result.result.autores)
+        console.log(result.result.autores);
         result.result.autores.forEach(function(autor) {
             var ID_autor = autor.iD_autor;
             var Nombre = autor.nombre;
