@@ -38,6 +38,12 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+
+        if ($("#nombre-estado").val().trim() === "" || $('#pais-de-estado').val() === "0") {
+            alert("Por favor complete todos los campos.");
+            return; // Detiene el proceso si los campos no están completos
+        }
+
         if ($("#id-estado").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
