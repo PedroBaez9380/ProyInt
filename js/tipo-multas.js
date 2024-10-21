@@ -36,6 +36,20 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+
+        // Validación de campos
+    const descripcion = $("#descripcion").val().trim();
+    const tarifa = $("#tarifa").val().trim();
+    
+    if (!descripcion) {
+        alert("La descripción es obligatoria.");
+        return;
+    }
+    if (!/^\d{1,8}$/.test(tarifa)) {
+        alert("La tarifa debe ser un número de hasta 8 dígitos.");
+        return;
+    }
+
         if ($("#id-tipo-multa").val() === "" ){
             option = "Guardar"
             typemod = 'POST'

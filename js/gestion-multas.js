@@ -39,6 +39,33 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+
+        // Validación básica de campos
+    if ($("#motivo-multa").val().trim() === "") {
+        alert("El motivo de la multa es obligatorio.");
+        return;
+    }
+    if ($("#metodo-pago").val().trim() === "") {
+        alert("El método de pago es obligatorio.");
+        return;
+    }
+    if ($("#n-tarjeta").val().trim() === "" && $('#metodo-pago').val().trim() !== "Efectivo") {
+        alert("El número de tarjeta es obligatorio si el método de pago no es 'Efectivo'.");
+        return;
+    }
+    if ($("#n-tarjeta").val().trim() !== "" && !/^\d{16}$/.test($("#n-tarjeta").val().trim())) {
+        alert("El número de tarjeta debe tener exactamente 16 dígitos.");
+        return;
+    }
+    if ($("#tipo-multa").val() === "default") {
+        alert("Por favor, selecciona un tipo de multa.");
+        return;
+    }
+    if ($("#id-renta").val().trim() === "") {
+        alert("El ID de renta es obligatorio.");
+        return;
+    }
+
         if ($("#id-multa").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
