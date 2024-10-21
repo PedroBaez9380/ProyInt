@@ -156,4 +156,16 @@ function traerUbicaciones() {
         alert("Hubo un problema al traer las ubicaciones: " + error + "\nStatus: " + status);
         console.error(xhr);
     });
+    function agregarEventoInput() {
+        $('#seccion, #estanteria').off('input').on('input', function() {
+            var $this = $(this);
+            if ($this.val().length > 20) {
+                // Limitar a 20 caracteres
+                $this.val($this.val().substring(0, 20));
+                alert("El máximo permitido es de 20 caracteres.");
+            }
+        });
+    }
+
+
 }
