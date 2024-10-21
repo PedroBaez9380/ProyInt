@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    traerIdiomas()
+    traerIdiomas();
 
     $('#tabla-cuerpo').on('click', 'tr', function() {
-        
         $('#boton-guardar').attr('disabled', true);
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', false);
@@ -17,15 +16,16 @@ $(document).ready(function() {
     });
 
     $('#boton-nuevo').click(function() {
-        habilitarCampos()
-        limpiarCampos() 
+        habilitarCampos();
+        limpiarCampos();
         $('#boton-guardar').attr('disabled', false);
         $('#boton-nuevo').attr('disabled', true);
         $('#boton-modificacion').attr('disabled', true);
+        $('#nombre').focus(); // Enfocar el campo de nombre
     });
 
     $('#boton-modificacion').click(function() {
-        habilitarCampos()
+        habilitarCampos();
         $('#boton-guardar').attr('disabled', false);
         $('#boton-nuevo').attr('disabled', false);
         $('#boton-modificacion').attr('disabled', true);
@@ -33,17 +33,18 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
-        if ($("#id-idioma").val() === "" ){
-            option = "Guardar"
-            typemod = 'POST'
+        var option, typemod, ID;
+        if ($("#id-idioma").val() === "") {
+            option = "Guardar";
+            typemod = 'POST';
             ID = null;
         } else {
-            option = "Actualizar"
-            typemod = 'PUT'
+            option = "Actualizar";
+            typemod = 'PUT';
             ID = $("#id-idioma").val();
         }
         $.ajax({
-            url: "https://localhost:7131/Idiomas/"+ option,
+            url: "https://localhost:7131/Idiomas/" + option,
             type: typemod,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -55,9 +56,9 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success === "True") {
                     console.log(response.message);
-                    limpiarCampos()
-                    deshabilitarCampos()
-                    traerIdiomas()
+                    limpiarCampos();
+                    deshabilitarCampos();
+                    traerIdiomas();
                     alert("Guardado exitoso!");
                     $('#boton-guardar').attr('disabled', true);
                     $('#boton-nuevo').attr('disabled', false);
@@ -72,7 +73,7 @@ $(document).ready(function() {
                 console.error("Hubo un error en la solicitud:", error);
                 alert("Hubo un problema al intentar guardar.");
             }
-        })
+        });
     });
 
     $('#boton-borrar').click(function() {
@@ -106,25 +107,39 @@ $(document).ready(function() {
                 alert("Hubo un problema al intentar eliminar.");
             }
         });
-        
-        
     });
 });
 
-function limpiarCampos(){
+function limpiarCampos() {
     $('.fila-campos div textarea').val('');
     $('.fila-campos div select').val('0');
 }
 
-function deshabilitarCampos(){
+function deshabilitarCampos() {
     $('.fila-campos div textarea').attr('disabled', true);
     $('.fila-campos div select').attr('disabled', true);
 }
 
-function habilitarCampos(){
+function habilitarCampos() {
     $('#nombre').attr('disabled', false);
 }
 
+function validarSoloLetras(campo) {
+    // Limitar a 30 caracteres
+    if (campo.value.length > 30) {
+        campo.value = campo.value.substring(0, 30);
+        alert('El máximo permitido es de 30 caracteres.');
+    }
+
+    // Expresión regular que permite solo letras y espacios
+    var regexSoloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+
+    if (!regexSoloLetras.test(campo.value)) {
+        // Reemplaza los caracteres que no sean letras
+        campo.value = campo.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        alert('Solo se permiten letras. No se permiten números.');
+    }
+}
 
 function traerIdiomas() {
     $('#tabla-cuerpo').empty();
@@ -134,7 +149,7 @@ function traerIdiomas() {
         dataType: 'json',
         crossDomain: true
     }).done(function (result) {
-        console.log(result.result.generos)
+        console.log(result.result.generos);
         result.result.idiomas.forEach(function(idioma) {
             var ID_idioma = idioma.iD_idioma;
             var Nombre = idioma.nombre;

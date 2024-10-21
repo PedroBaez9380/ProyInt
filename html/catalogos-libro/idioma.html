@@ -73,7 +73,8 @@
         <div class="contenedor-campos">
             <div class="fila-campos">
                 <div><h6>ID de idioma</h6><textarea data-id="" id="id-idioma" rows="1" disabled></textarea></div>
-                <div><h6>Nombre</h6><textarea id="nombre" rows="1" disabled></textarea></div>
+                <div><h6>Nombre</h6><textarea id="nombre" rows="1" oninput="validarSoloLetras(this)" disabled></textarea></div>
+                <div id="error-nombre" style="color: red; display: none;"></div>
             </div>
             <div class="botones">
                 <div>
