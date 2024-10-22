@@ -60,6 +60,12 @@ $(document).ready(function() {
             return;
         }
 
+        var isbnRegex = /^(?:\d{1,5}-\d{1,7}-\d{1,7}-[\dX]|\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1,7})$/;
+        if (!isbnRegex.test($('#n-ISBN').val())) {
+            alert("El número ISBN debe tener el formato adecuado y contener 10 o 13 dígitos (puede incluir guiones)");
+            return;
+        }
+
         if($('#editorial-libro').val() === "0"){
             alert("Favor de seleccionar la Editorial");
             return;
@@ -71,8 +77,8 @@ $(document).ready(function() {
             return;
         }
 
-        var anoPublicacion = parseInt($('#n-paginas').val(), 7);
-        if (isNaN(anoPublicacion) || anoPublicacion < 1000000 || anoPublicacion > 0) {
+        var npaginas = parseInt($('#n-paginas').val(), 10);
+        if (isNaN(npaginas) || npaginas > 10000 || npaginas < 0) {
             alert("Favor de introducir un numero de paginas valido.");
             return;
         }
@@ -89,6 +95,11 @@ $(document).ready(function() {
 
         if($('#idioma-libro').val() === "0"){
             alert("Favor de seleccionar un idioma");
+            return;
+        }
+
+        if($('#condicion-libro').val() === "0"){
+            alert("Favor de seleccionar una condicion");
             return;
         }
 

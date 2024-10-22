@@ -39,6 +39,12 @@ $(document).ready(function() {
             return;
         }
 
+        var regex = /^[A-Za-z]+$/;
+        if (!regex.test($('#nombre').val())) {
+            alert("El nombre solo debe contener letras");
+            return;
+        }
+
         if ($("#id-genero").val() === "" ){
             option = "Guardar"
             typemod = 'POST'
