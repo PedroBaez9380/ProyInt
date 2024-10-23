@@ -53,6 +53,12 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        // Validación: verificar si los campos están vacíos
+        if ($("#nombre").val().trim() === "" || $("#apellido").val().trim() === "") {
+            alert("Debe llenar todos los apartados para poder guardar.");
+            return; // Detener la ejecución si los campos no están completos
+        }
+
         if ($("#id-autor").val() === "" ){
             option = "Guardar";
             typemod = 'POST';
@@ -62,6 +68,7 @@ $(document).ready(function() {
             typemod = 'PUT';
             ID = $("#id-autor").val();
         }
+
         $.ajax({
             url: "https://localhost:7131/Autores/"+ option,
             type: typemod,
@@ -126,23 +133,23 @@ $(document).ready(function() {
     });
 });
 
-        // Función para validar solo letras y limitar a 30 caracteres
-        function validarSoloLetras(campo) {
-            var valorCampo = campo.value;
+// Función para validar solo letras y limitar a 30 caracteres
+function validarSoloLetras(campo) {
+    var valorCampo = campo.value;
 
-            // Limitar a 30 caracteres
-            if (valorCampo.length > 30) {
-                campo.value = valorCampo.substring(0, 30);
-                alert('El máximo permitido es de 30 caracteres.');
-            }
+    // Limitar a 30 caracteres
+    if (valorCampo.length > 30) {
+        campo.value = valorCampo.substring(0, 30);
+        alert('El máximo permitido es de 30 caracteres.');
+    }
 
-            // Expresión regular que permite solo letras y espacios
-            if (/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/.test(valorCampo)) {
-                // Reemplaza los caracteres que no sean letras
-                campo.value = valorCampo.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
-                alert('Solo se permiten letras. No se permiten números.');
-            }
-        }
+    // Expresión regular que permite solo letras y espacios
+    if (/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/.test(valorCampo)) {
+        // Reemplaza los caracteres que no sean letras
+        campo.value = valorCampo.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        alert('Solo se permiten letras. No se permiten números.');
+    }
+}
 
 function limpiarCampos(){
     $('.fila-campos div textarea').val('');
@@ -185,4 +192,4 @@ function traerAutores() {
         alert("Hubo un problema al traer los autores: " + error + "\nStatus: " + status);
         console.error(xhr);
     });
-}
+}   

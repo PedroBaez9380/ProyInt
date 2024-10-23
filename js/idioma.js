@@ -33,6 +33,12 @@ $(document).ready(function() {
     });
 
     $('#boton-guardar').click(function() {
+        // Validar si los campos están llenos
+        if ($("#nombre").val().trim() === "") {
+            alert("Por favor, llene todos los apartados para guardar.");
+            return; // Detener la ejecución si los campos están vacíos
+        }
+
         var option, typemod, ID;
         if ($("#id-idioma").val() === "") {
             option = "Guardar";
@@ -43,6 +49,7 @@ $(document).ready(function() {
             typemod = 'PUT';
             ID = $("#id-idioma").val();
         }
+
         $.ajax({
             url: "https://localhost:7131/Idiomas/" + option,
             type: typemod,
@@ -149,7 +156,7 @@ function traerIdiomas() {
         dataType: 'json',
         crossDomain: true
     }).done(function (result) {
-        console.log(result.result.generos);
+        console.log(result.result.idiomas);
         result.result.idiomas.forEach(function(idioma) {
             var ID_idioma = idioma.iD_idioma;
             var Nombre = idioma.nombre;
